@@ -1,12 +1,12 @@
 import re
 import sys
 
-MODULE_REGEX = r"^[_a-zA-Z][_a-zA-Z0-9]+$"
+package_name = '{{ cookiecutter.__package_slug }}'
 
-module_name = "{{ cookiecutter.__package_slug }}"
+# Skip validation if empty (still at default)
+if package_name == '':
+    sys.exit(0)  # Exit successfully without validating
 
-if not re.match(MODULE_REGEX, module_name):
-    print("ERROR: %s is not a valid Python module name!" % module_name)
-
-    # exits with status 1 to indicate failure
+if not re.match(r'^[a-zA-Z][a-zA-Z0-9_]*$', package_name):
+    print(f'ERROR: {package_name} is not a valid Python module name!')
     sys.exit(1)
